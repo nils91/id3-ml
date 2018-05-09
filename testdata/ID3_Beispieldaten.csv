@@ -1,0 +1,15 @@
+Kundenart,Zahlungsgeschwindigkeit,Kauffrequenz,Herkunft,Zahlungsmittel: Rechnung?
+Neukunde,niedrig,niedrig,Inland,false
+Neukunde,niedrig,niedrig,Ausland,false
+Stammkunde,niedrig,niedrig,Inland,true
+Normalkunde,mittel,niedrig,Inland,true
+Normalkunde,hoch,hoch,Inland,true
+Normalkunde,hoch,hoch,Ausland,false
+Stammkunde,hoch,hoch,Ausland,true
+Neukunde,mittel,niedrig,Inland,false
+Neukunde,hoch,hoch,Inland,true
+Normalkunde,mittel,hoch,Inland,true
+Neukunde,mittel,hoch,Ausland,true
+Stammkunde,mittel,niedrig,Ausland,true
+Stammkunde,niedrig,hoch,Inland,true
+Normalkunde,mittel,niedrig,Ausland,false
