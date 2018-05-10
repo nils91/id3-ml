@@ -137,15 +137,15 @@ public class Main {
 						value);
 				DecisionTreeNode subTree = buildID3(buildFeatureSubset(features, f),
 						buildFeatureVectorSubset(filteredFeatureVectors, features, f));
-				if(subTree==null) {
-					subTree=new DecisionTreeNode();
+				if (subTree == null) {
+					subTree = new DecisionTreeNode();
 					subTree.setTerminatingValue(getResultForTerminationVectors(filteredFeatureVectors));
 				}
-				dtn.addDecisionBranch(value,subTree);
+				dtn.addDecisionBranch(value, subTree);
 			}
 			return dtn;
 		} else {
-			LOGGER.log(Level.FINE, "No most deciding feature. Entropy is "+entropy);			
+			LOGGER.log(Level.FINE, "No most deciding feature. Entropy is " + entropy);
 			return null;
 		}
 
@@ -153,7 +153,7 @@ public class Main {
 
 	private static String getResultForTerminationVectors(List<String[]> featureVectors) {
 		String[] vector = featureVectors.get(0);
-		return vector[vector.length-1];
+		return vector[vector.length - 1];
 	}
 
 	private static double getFullEntropy(List<String[]> featureVectors) {
@@ -217,6 +217,23 @@ public class Main {
 		return gain;
 	}
 
+	private static double getFeatureInformationGainRatio(Feature f, List<String[]> featureVectors,
+			List<Feature> allFeatures) {
+		return getFeatureIntrinsicValue(f, featureVectors, allFeatures)/getFeatureInformationGain(f, featureVectors, allFeatures);
+	}
+
+	private static double getFeatureIntrinsicValue(Feature f, List<String[]> featureVectors,
+			List<Feature> allFeatures) {
+		double intrinsicValue = 0;
+		Map<String, Integer> featureValueCnts = getFeatureValueCounts(f, featureVectors, allFeatures);
+		for (String value : featureValueCnts.keySet()) {			
+			intrinsicValue -= (featureValueCnts.get(value) / (double) featureVectors.size())
+					* log2(featureValueCnts.get(value) / (double) featureVectors.size());
+		}
+
+		return intrinsicValue;
+	}
+
 	private static double log2(double x) {
 		return Math.log(x) / Math.log(2);
 	}
@@ -268,7 +285,7 @@ public class Main {
 		Feature objectivlyBestFeature = null;
 		double featureInformationGain = 0;
 		for (int i = 0; i < features.size(); i++) {
-			double gain = getFeatureInformationGain(features.get(i), featureVectors, features);
+			double gain = getFeatureInformationGainRatio(features.get(i), featureVectors, features);
 			if (gain > featureInformationGain) {
 				objectivlyBestFeature = features.get(i);
 				featureInformationGain = gain;
