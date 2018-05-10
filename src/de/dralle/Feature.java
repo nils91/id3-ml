@@ -6,6 +6,10 @@ import java.util.Set;
 public class Feature {
 	private Set<String> values;
 
+	public Set<String> getValues() {
+		return values;
+	}
+
 	public String getName() {
 		return name;
 	}
